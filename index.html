@@ -10,6 +10,7 @@
       font-family: 'Pacifico', cursive;
       background: linear-gradient(to right, #ffdde1, #ee9ca7);
       overflow-x: hidden;
+      position: relative;
     }
     .centered {
       display: flex;
@@ -117,120 +118,183 @@
     }
     .kiss {
       position: fixed;
-      font-size: 2em;
-      animation: kissFloat 1.5s ease-out forwards;
-      pointer-events: none;
-      z-index: 1000;
+      width: 24px;
+      height: 24px;
+      animation: fall 2.5s linear infinite;
+      font-size: 24px;
+      z-index: 9999;
     }
-    @keyframes kissFloat {
-      0% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-100px); }
+    @keyframes fall {
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      background: red;
+      border-radius: 50% 50% 50% 50%;
+      animation: float 5s ease-in infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-200px); }
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
   </style>
 </head>
-<body>
-  <div class="centered" id="intro">
+<body onclick="triggerKisses()">
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://docs.google.com/uc?export=download&id=1fNtohVRRIkhoNbR5AaDss0vYmKwyy7IQ" type="audio/mpeg">
+  </audio>
+  <canvas id="fireworks"></canvas>  <div class="centered" id="intro">
     <h1>Happy Birthday, Piku!</h1>
-    <button onclick="startSurprise()">Get into the specialized surprise made by Shubham for you ❤️‍🩹</button>
-  </div>
-  <div class="centered did-you-know" id="didYouKnow">
-    <div class="message-cloud" onclick="revealText(event, this, 'It\'s YouTube without the Tube. 🫂♾️❤️‍🩹')">Did you know who has been the most special person in my life..?</div>
-    <div class="message-cloud" onclick="revealText(event, this, 'P – Perfect ♾️🫂<br>I – Inspiring and Intelligent<br>K – Kind-hearted 🤌<br>U – Unique and Universe for me ♾️🥹')">Did you know the full form of Piku…?</div>
-  </div>
-  <div class="centered surprise" id="mainSurprise">
+    <button onclick="startSurprise(); event.stopPropagation()">Start surprise made by Shubham for special you..❤️‍🩹</button>
+  </div>  <div class="centered did-you-know" id="didYouKnow">
+    <div class="message-cloud" onclick="revealText(this, 'It\'s YouTube without the Tube. 🪲️♾️❤️‍🩹')">Did you know who has been the most special person in my life..?</div>
+    <div class="message-cloud" onclick="revealText(this, 'P – Perfect ♾️🪲️<\br>I – Inspiring and Intelligent<\br>K – Kind-hearted 🪨<\br>U – Unique and Universe for me ♾️🥹')">Did you know the full form of Piku…?</div>
+  </div>  <div class="centered surprise" id="mainSurprise">
     <h2>Here’s your magical moment...</h2>
-    <audio autoplay loop>
-      <source src="birthday-music.mp3" type="audio/mpeg">
-    </audio>
-    <div class="message-heart" onclick="unfoldReveal(event, this, 'You are someone I need the most..♾️🥺')">Click to reveal a thought...</div>
-    <div class="message-heart" onclick="unfoldReveal(event, this, 'You’re not just my love; you’re my best friend and partner in all crimes. We’ll share our pros, but I’ll take the sins... 🥺😘♾️')">Click to reveal a thought...</div>
+    <div class="message-heart" onclick="unfoldReveal(this, 'You are someone I need the most..♾️🥺')">Click to reveal a thought...</div>
+    <div class="message-heart" onclick="unfoldReveal(this, 'You’re not just my love; you’re my best friend and partner in all crimes. We’ll share our pros, but I’ll take the sins... 🥺😘♾️')">Click to reveal a thought...</div>
     <div class="memory">
       <p>The day we met for the first time, I realized something was so special about you...</p>
       <p>That late night we talked — Jan 25, 12:43 — when we both confessed...</p>
       <p>When you held my hand... my heart skipped a beat.</p>
       <p>Be exactly who you are. You’re perfect. Always have been, always will be... 🥺♾️😘</p>
     </div>
-  </div>
-  <div class="centered" id="hangingPhotos">
+  </div>  <div class="centered" id="hangingPhotos">
     <h2>Moments Captured Just for You</h2>
     <div class="photo-with-caption">
-      <img src="images/photo1.jpg" class="hanging-photo" alt="Photo 1">
+      <img src="https://drive.google.com/uc?export=view&id=1fBl725UdUIhUewpB9twkQXiOv0oWf_Z2" class="hanging-photo" alt="Photo 1">
       <p class="caption">You are someone I need the most..♾️🥺</p>
     </div>
     <div class="photo-with-caption">
-      <img src="images/photo2.jpg" class="hanging-photo" alt="Photo 2">
-      <p class="caption">You’re not just my love; you’re my best friend and partner in all crimes. We’ll share our pros, but I’ll take the sins... 🥺😘♾️</p>
+      <img src="https://drive.google.com/uc?export=view&id=1fCLJosufWdoWejIJ7uZsq6x4ORcEeOsx" class="hanging-photo" alt="Photo 2">
+      <p class="caption">You’re not just my love; you’re my best friend and partner in all crimes...</p>
     </div>
-  </div>
-  <div class="centered" id="gameSection">
+  </div>  <div class="centered" id="gameSection">
     <h2>Find the Treasure of My Heart</h2>
     <div id="heartsContainer"></div>
-  </div>
-  <script>
-    function showKiss(x, y) {
-      const kiss = document.createElement('div');
-      kiss.className = 'kiss';
-      kiss.textContent = '💋';
-      kiss.style.left = `${x}px`;
-      kiss.style.top = `${y}px`;
-      document.body.appendChild(kiss);
-      setTimeout(() => kiss.remove(), 1500);
-    }function revealText(event, el, text) {
-  el.innerHTML = text;
-  el.style.background = '#fff4f4';
-  showKiss(event.clientX, event.clientY);
-}
+  </div>  <script>
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
 
-function unfoldReveal(event, el, text) {
-  el.innerHTML = text;
-  el.classList.add('unfold');
-  showKiss(event.clientX, event.clientY);
-}
+    function startSurprise() {
+      document.getElementById('intro').style.display = 'none';
+      const clouds = document.querySelectorAll('.message-cloud');
+      document.getElementById('didYouKnow').style.display = 'flex';
+      clouds.forEach(cloud => cloud.style.display = 'block');
 
-function startSurprise() {
-  document.getElementById('intro').style.display = 'none';
-  const clouds = document.querySelectorAll('.message-cloud');
-  clouds.forEach(cloud => cloud.style.display = 'block');
-  document.getElementById('didYouKnow').style.display = 'flex';
-  setTimeout(() => {
-    document.getElementById('didYouKnow').style.display = 'none';
-    document.getElementById('mainSurprise').style.display = 'flex';
-    document.getElementById('hangingPhotos').style.display = 'flex';
-    const hearts = document.querySelectorAll('.message-heart');
-    hearts.forEach(h => h.style.display = 'block');
-    document.getElementById('gameSection').style.display = 'flex';
-    generateHearts();
-  }, 10000);
-}
+      setTimeout(() => {
+        document.getElementById('didYouKnow').style.display = 'none';
+        document.getElementById('mainSurprise').style.display = 'flex';
+        document.getElementById('hangingPhotos').style.display = 'flex';
+        document.getElementById('gameSection').style.display = 'flex';
+        const hearts = document.querySelectorAll('.message-heart');
+        hearts.forEach(h => h.style.display = 'block');
+        generateHearts();
+        triggerBalloons();
+      }, 10000);
+    }
 
-function generateHearts() {
-  const container = document.getElementById('heartsContainer');
-  container.innerHTML = '';
-  const total = 6;
-  const correct = Math.floor(Math.random() * total);
-  for (let i = 0; i < total; i++) {
-    const div = document.createElement('div');
-    div.className = 'treasure-heart';
-    div.textContent = '❤️';
-    div.onclick = (event) => {
-      showKiss(event.clientX, event.clientY);
-      if (i === correct) {
-        div.innerHTML = '<div class="explosion">You are the treasure of my heart, why find it? 🌹♾️💯</div>';
-        showConfetti();
-      } else {
-        div.remove();
-        alert("You're close, better luck next time!");
+    function revealText(el, text) {
+      el.innerHTML = text;
+      el.style.background = '#fff4f4';
+    }
+
+    function unfoldReveal(el, text) {
+      el.innerHTML = text;
+      el.classList.add('unfold');
+    }
+
+    function generateHearts() {
+      const container = document.getElementById('heartsContainer');
+      container.innerHTML = '';
+      const total = 6;
+      const correct = Math.floor(Math.random() * total);
+      for (let i = 0; i < total; i++) {
+        const div = document.createElement('div');
+        div.className = 'treasure-heart';
+        div.textContent = '❤️';
+        div.onclick = () => {
+          if (i === correct) {
+            alert('You are the treasure of my heart! ♾️');
+            div.innerHTML = '<div class="explosion">❤️</div>';
+          } else {
+            div.remove();
+            alert("You're close, try again!");
+          }
+        };
+        container.appendChild(div);
       }
-    };
-    container.appendChild(div);
-  }
-}
+    }
 
-function showConfetti() {
-  // Placeholder for confetti animation
-  console.log("Confetti explosion!");
-}
+    function triggerKisses() {
+      for (let i = 0; i < 60; i++) {
+        const kiss = document.createElement('div');
+        kiss.className = 'kiss';
+        kiss.style.left = Math.random() * 100 + 'vw';
+        kiss.style.top = '-30px';
+        kiss.textContent = '💋';
+        document.body.appendChild(kiss);
+        setTimeout(() => kiss.remove(), 3000);
+      }
+    }
 
-  </script>
-</body>
-</html>
+    function triggerBalloons() {
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        balloon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 8000);
+      }
+    }
+
+    // Fireworks effect using canvas
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particles = [];
+    function createParticle(x, y) {
+      for (let i = 0; i < 30; i++) {
+        particles.push({
+          x,
+          y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 4 + 1,
+          radius: 2,
+          life: 60
+        });
+      }
+    }
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.life--;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+        ctx.fill();
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+    setInterval(() => createParticle(Math.random() * canvas.width, Math.random() * canvas.height), 800);
+    animateFireworks();
+  </script></body>
+        </html>
