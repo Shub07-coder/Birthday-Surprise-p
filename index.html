@@ -182,11 +182,11 @@
   <div class="centered" id="hangingPhotos">
     <h2>Moments Captured Just for You</h2>
     <div class="photo-with-caption">
-      <img src="https://drive.google.com/uc?export=view&id=1fBl725UdUIhUewpB9twkQXiOv0oWf_Z2" class="hanging-photo" alt="Photo 1">
+      <img src="https://drive.google.com/uc?export=view&id=1fCLJosufWdoWejIJ7uZsq6x4ORcEeOsx" class="hanging-photo" alt="Photo 1">
       <p class="caption">You are someone I need the most..♾️🥺</p>
     </div>
     <div class="photo-with-caption">
-      <img src="https://drive.google.com/uc?export=view&id=1fCLJosufWdoWejIJ7uZsq6x4ORcEeOsx" class="hanging-photo" alt="Photo 2">
+      <img src="https://drive.google.com/uc?export=view&id=1fBl725UdUIhUewpB9twkQXiOv0oWf_Z2" class="hanging-photo" alt="Photo 2">
       <p class="caption">You’re not just my love; you’re my best friend and partner in all crimes...</p>
     </div>
   </div>
@@ -194,10 +194,6 @@
     <h2>Find the Treasure of My Heart</h2>
     <div id="heartsContainer"></div>
   </div>
-  <div class="centered" style="margin-top: 50px;">
-    <button onclick="triggerKisses(); showEndMessage()" style="background: #fff0f5; color: #d63384;">End</button>
-  </div>
-
   <script>
     function revealText(el, text) {
       el.innerHTML = text;
@@ -211,87 +207,27 @@
       document.getElementById('intro').style.display = 'none';
       const clouds = document.querySelectorAll('.message-cloud');
       clouds.forEach(cloud => cloud.style.display = 'block');
+      document.getElementById('didYouKnow').style.display = 'flex';
       setTimeout(() => {
         document.getElementById('didYouKnow').style.display = 'none';
         document.getElementById('mainSurprise').style.display = 'flex';
-        document.getElementById('hangingPhotos').style.display = 'flex';
-        const hearts = document.querySelectorAll('.message-heart');
-        hearts.forEach(h => h.style.display = 'block');
-        document.getElementById('gameSection').style.display = 'flex';
-        generateHearts();
-        createBalloons();
-      }, 10000);
-    }
-
-    // Fireworks function
-    function createFireworks() {
-      const firework = document.createElement('div');
-      firework.className = 'firework';
-      document.body.appendChild(firework);
-      setTimeout(() => {
-        firework.style.display = 'block';
-      }, 1000);
-      setTimeout(() => {
-        firework.remove();
-      }, 3000);
-    }
-
-    // Balloons function
-    function createBalloons() {
-      for (let i = 0; i < 5; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.textContent = '🎈';
-        balloon.style.left = `${Math.random() * window.innerWidth}px`;
-        document.body.appendChild(balloon);
-        setTimeout(() => {
-          balloon.remove();
-        }, 5000);
-      }
-    }
-
-    function generateHearts() {
-      const container = document.getElementById('heartsContainer');
-      container.innerHTML = '';
-      const total = 6;
-      const correct = Math.floor(Math.random() * total);
-      for (let i = 0; i < total; i++) {
-        const div = document.createElement('div');
-        div.className = 'treasure-heart';
-        div.textContent = '❤️';
-        div.onclick = function() {
-          if (i === correct) {
-            const explosion = document.createElement('div');
-            explosion.className = 'explosion';
-            explosion.innerHTML = '🎉💖';
-            document.body.appendChild(explosion);
-            setTimeout(() => {
-              explosion.remove();
-            }, 2000);
-            alert('You found the treasure! 💖');
-          }
-        };
-        container.appendChild(div);
-      }
+      }, 4000);
     }
     function triggerKisses() {
-      for (let i = 0; i < 50; i++) {
-        const kiss = document.createElement('div');
-        kiss.classList.add('kiss');
-        kiss.textContent = '😘';
-        kiss.style.left = `${Math.random() * window.innerWidth}px`;
-        kiss.style.animationDelay = `${Math.random() * 5}s`;
-        document.body.appendChild(kiss);
-        setTimeout(() => {
-          kiss.remove();
-        }, 2000);
-      }
+      const kiss = document.createElement("div");
+      kiss.classList.add("kiss");
+      kiss.innerHTML = "💋";
+      kiss.style.left = Math.random() * 100 + "vw";
+      kiss.style.animationDelay = Math.random() * 2 + "s";
+      document.body.appendChild(kiss);
+      setTimeout(() => kiss.remove(), 3000);
     }
-    function showEndMessage() {
-      alert('Thank you for being so special, Piku! Happy Birthday again! ❤️');
-      document.getElementById('intro').style.display = 'flex';
-      document.getElementById('mainSurprise').style.display = 'none';
+    function createFireworks() {
+      const firework = document.createElement("div");
+      firework.classList.add("firework");
+      firework.innerHTML = "🎆";
+      document.body.appendChild(firework);
+      firework.style.display = "block";
+      setTimeout(() => firework.remove(), 2000);
     }
   </script>
-</body>
-</html>
