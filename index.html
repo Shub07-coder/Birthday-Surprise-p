@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Piku</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
@@ -11,13 +11,11 @@
       font-family: 'Pacifico', cursive;
       background: linear-gradient(to right, #ffdde1, #ee9ca7);
       overflow-x: hidden;
-      position: relative;
     }
     .centered {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
       text-align: center;
       color: #fff;
       padding: 20px;
@@ -44,7 +42,7 @@
       transition: transform 0.3s;
       display: none;
     }
-    .message-heart:hover, .message-cloud:hover, .treasure-heart:hover {
+    .message-cloud:hover, .message-heart:hover, .treasure-heart:hover {
       transform: scale(1.05);
     }
     .unfold {
@@ -54,12 +52,6 @@
       0% { transform: scale(1) rotate(0deg); opacity: 1; }
       50% { transform: scale(1.3) rotate(10deg); }
       100% { transform: scale(1) rotate(0deg); background: #fff4f4; color: #ee5a5a; }
-    }
-    .surprise, .did-you-know, #hangingPhotos, #gameSection {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
     }
     .memory {
       margin-top: 30px;
@@ -74,7 +66,6 @@
     }
     .hanging-photo {
       width: 150px;
-      height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       animation: swing 4s infinite ease-in-out;
@@ -91,31 +82,13 @@
       text-shadow: 1px 1px 2px #000;
     }
     .explosion {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       font-size: 2em;
       color: red;
       animation: explode 2s forwards;
-      z-index: 10;
     }
     @keyframes explode {
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(4); opacity: 0; }
-    }
-    .treasure-heart {
-      font-size: 3em;
-      color: red;
-      cursor: pointer;
-      margin: 10px;
-      display: inline-block;
-      padding: 10px;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-    }
-    .treasure-heart:hover {
-      transform: scale(1.2);
     }
     .kiss {
       position: absolute;
@@ -128,106 +101,113 @@
       0% { transform: translateY(-50px); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
-
-    /* Balloon Styles */
-    .balloon {
-      position: absolute;
-      bottom: -50px;
-      animation: floatUp 5s infinite;
-      font-size: 3em;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-100vh); }
-    }
-
-    /* Firework Styles */
-    .firework {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: none;
-      animation: fireworkAnimation 2s forwards;
-    }
-    @keyframes fireworkAnimation {
-      0% { transform: scale(0); opacity: 1; }
-      100% { transform: scale(10); opacity: 0; }
-    }
   </style>
 </head>
-<body onclick="triggerKisses(); createFireworks()">
+<body onclick="triggerKisses()">
   <div class="centered" id="intro">
     <h1>Happy Birthday, Piku!</h1>
-    <button onclick="startSurprise(); event.stopPropagation()">Get into the specialized surprise made by Shubham for you ❤️‍🪹</button>
+    <button onclick="startSurprise(); event.stopPropagation()">Start Surprise</button>
   </div>
-  <div class="centered did-you-know" id="didYouKnow">
-    <div class="message-cloud" onclick="revealText(this, 'It\'s YouTube without the Tube. 🫲️♾️❤️‍🪹')">Did you know who has been the most special person in my life..?</div>
-    <div class="message-cloud" onclick="revealText(this, 'P – Perfect ♾️🫲️<br>I – Inspiring and Intelligent<br>K – Kind-hearted 🫨<br>U – Unique and Universe for me ♾️🥹')">Did you know the full form of Piku…?</div>
+
+  <div class="centered" id="didYouKnow" style="display:none;">
+    <div class="message-cloud" onclick="revealText(this, 'It\'s YouTube without the Tube. ♾️❤️‍🪹')">Did you know who has been the most special person in my life..?</div>
+    <div class="message-cloud" onclick="revealText(this, 'P – Perfect<br>I – Inspiring and Intelligent<br>K – Kind-hearted<br>U – Unique and Universe for me ♾️')">Did you know the full form of Piku…?</div>
   </div>
-  <div class="centered surprise" id="mainSurprise">
+
+  <div class="centered" id="mainSurprise" style="display:none;">
     <h2>Here’s your magical moment...</h2>
-    <audio autoplay loop>
+    <audio id="bgMusic" autoplay loop>
       <source src="birthday-music.mp3" type="audio/mpeg">
     </audio>
-    <div class="message-heart" onclick="unfoldReveal(this, 'You are someone I need the most..♾️🥺')">Click to reveal a thought...</div>
-    <div class="message-heart" onclick="unfoldReveal(this, 'You’re not just my love; you’re my best friend and partner in all crimes. We’ll share our pros, but I’ll take the sins... 🥺😘♾️')">Click to reveal a thought...</div>
+    <div class="message-heart" onclick="unfoldReveal(this, 'You are someone I need the most..♾️')">Click to reveal a thought...</div>
+    <div class="message-heart" onclick="unfoldReveal(this, 'You’re not just my love; you’re my best friend and partner in all crimes. We’ll share our pros, but I’ll take the sins... ♾️')">Click to reveal a thought...</div>
+
     <div class="memory">
       <p>The day we met for the first time, I realized something was so special about you...</p>
       <p>That late night we talked — Jan 25, 12:43 — when we both confessed...</p>
       <p>When you held my hand... my heart skipped a beat.</p>
-      <p>Be exactly who you are. You’re perfect. Always have been, always will be... 🥺♾️😘</p>
+      <p>Be exactly who you are. You’re perfect. Always have been, always will be... ♾️</p>
     </div>
   </div>
-  <div class="centered" id="hangingPhotos">
+
+  <div class="centered" id="hangingPhotos" style="display:none;">
     <h2>Moments Captured Just for You</h2>
     <div class="photo-with-caption">
-      <img src="https://drive.google.com/uc?export=view&id=1fCLJosufWdoWejIJ7uZsq6x4ORcEeOsx" class="hanging-photo" alt="Photo 1">
-      <p class="caption">You are someone I need the most..♾️🥺</p>
+      <img src="https://drive.google.com/uc?export=view&id=1fBl725UdUIhUewpB9twkQXiOv0oWf_Z2" class="hanging-photo">
+      <p class="caption">You are someone I need the most..♾️</p>
     </div>
     <div class="photo-with-caption">
-      <img src="https://drive.google.com/uc?export=view&id=1fBl725UdUIhUewpB9twkQXiOv0oWf_Z2" class="hanging-photo" alt="Photo 2">
+      <img src="https://drive.google.com/uc?export=view&id=1fCLJosufWdoWejIJ7uZsq6x4ORcEeOsx" class="hanging-photo">
       <p class="caption">You’re not just my love; you’re my best friend and partner in all crimes...</p>
     </div>
   </div>
-  <div class="centered" id="gameSection">
+
+  <div class="centered" id="gameSection" style="display:none;">
     <h2>Find the Treasure of My Heart</h2>
     <div id="heartsContainer"></div>
   </div>
+
   <script>
+    function startSurprise() {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('didYouKnow').style.display = 'flex';
+      const clouds = document.querySelectorAll('.message-cloud');
+      clouds.forEach(cloud => cloud.style.display = 'block');
+
+      setTimeout(() => {
+        document.getElementById('didYouKnow').style.display = 'none';
+        document.getElementById('mainSurprise').style.display = 'flex';
+        document.getElementById('hangingPhotos').style.display = 'flex';
+        document.getElementById('gameSection').style.display = 'flex';
+        const hearts = document.querySelectorAll('.message-heart');
+        hearts.forEach(h => h.style.display = 'block');
+        generateHearts();
+      }, 10000);
+    }
+
     function revealText(el, text) {
       el.innerHTML = text;
       el.style.background = '#fff4f4';
     }
+
     function unfoldReveal(el, text) {
       el.innerHTML = text;
       el.classList.add('unfold');
     }
-    function startSurprise() {
-      document.getElementById('intro').style.display = 'none';
-      const clouds = document.querySelectorAll('.message-cloud');
-      clouds.forEach(cloud => cloud.style.display = 'block');
-      document.getElementById('didYouKnow').style.display = 'flex';
-      setTimeout(() => {
-        document.getElementById('didYouKnow').style.display = 'none';
-        document.getElementById('mainSurprise').style.display = 'flex';
-      }, 4000);
+
+    function generateHearts() {
+      const container = document.getElementById('heartsContainer');
+      container.innerHTML = '';
+      const total = 6;
+      const correct = Math.floor(Math.random() * total);
+      for (let i = 0; i < total; i++) {
+        const div = document.createElement('div');
+        div.className = 'treasure-heart';
+        div.textContent = '❤️';
+        div.onclick = () => {
+          if (i === correct) {
+            alert('You are the treasure of my heart! ♾️');
+            div.innerHTML = '<div class="explosion">❤️</div>';
+          } else {
+            div.remove();
+            alert("You're close, try again!");
+          }
+        };
+        container.appendChild(div);
+      }
     }
+
     function triggerKisses() {
-      const kiss = document.createElement("div");
-      kiss.classList.add("kiss");
-      kiss.innerHTML = "💋";
-      kiss.style.left = Math.random() * 100 + "vw";
-      kiss.style.animationDelay = Math.random() * 2 + "s";
-      document.body.appendChild(kiss);
-      setTimeout(() => kiss.remove(), 3000);
-    }
-    function createFireworks() {
-      const firework = document.createElement("div");
-      firework.classList.add("firework");
-      firework.innerHTML = "🎆";
-      document.body.appendChild(firework);
-      firework.style.display = "block";
-      setTimeout(() => firework.remove(), 2000);
+      for (let i = 0; i < 60; i++) {
+        const kiss = document.createElement('div');
+        kiss.className = 'kiss';
+        kiss.style.left = Math.random() * 100 + 'vw';
+        kiss.style.top = '-30px';
+        kiss.textContent = '💋';
+        document.body.appendChild(kiss);
+        setTimeout(() => kiss.remove(), 3000);
+      }
     }
   </script>
+</body>
+</html>
