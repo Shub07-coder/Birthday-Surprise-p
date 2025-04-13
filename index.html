@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +11,7 @@
       font-family: 'Pacifico', cursive;
       background: linear-gradient(to right, #ffdde1, #ee9ca7);
       overflow-x: hidden;
+      position: relative;
     }
     .centered {
       display: flex;
@@ -102,6 +104,36 @@
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(4); opacity: 0; }
     }
+    .treasure-heart {
+      font-size: 3em;
+      color: red;
+      cursor: pointer;
+      margin: 10px;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+    .treasure-heart:hover {
+      transform: scale(1.2);
+    }
+    /* Kiss shower animation */
+    .kiss {
+      position: absolute;
+      font-size: 2em;
+      animation: fall 3s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -145,61 +177,40 @@
   <script>
     function revealText(el, text) {
       el.innerHTML = text;
-      el.style.background = '#fff4f4';
+      el.style.background = '#fff4f4';  // Change background color once clicked
+      el.style.cursor = 'not-allowed';  // Make it look non-clickable after it’s revealed
+      el.onclick = null;  // Disable further clicking on it
+      createKissShower();  // Trigger kiss shower
     }
+
     function unfoldReveal(el, text) {
       el.innerHTML = text;
       el.classList.add('unfold');
+      createKissShower();  // Trigger kiss shower
     }
+
+    function createKissShower() {
+      const kiss = document.createElement('div');
+      kiss.className = 'kiss';
+      kiss.innerHTML = '💋';  // Kiss emoji
+      kiss.style.left = `${Math.random() * 100}vw`;  // Random horizontal position
+      kiss.style.animationDuration = `${Math.random() * 2 + 2}s`;  // Random falling speed
+      document.body.appendChild(kiss);
+
+      // Remove the kiss after the animation completes
+      setTimeout(() => {
+        kiss.remove();
+      }, 3000);
+    }
+
     function startSurprise() {
       document.getElementById('intro').style.display = 'none';
-      const clouds = document.querySelectorAll('.message-cloud');
-      clouds.forEach(cloud => cloud.style.display = 'block');
+      
+      // Show the "Did You Know" section after 1 second
       setTimeout(() => {
-        document.getElementById('didYouKnow').style.display = 'none';
-        document.getElementById('mainSurprise').style.display = 'flex';
-        document.getElementById('hangingPhotos').style.display = 'flex';
-        const hearts = document.querySelectorAll('.message-heart');
-        hearts.forEach(h => h.style.display = 'block');
-        document.getElementById('gameSection').style.display = 'flex';
-        generateHearts();
-      }, 10000);
-    }
-    function generateHearts() {
-      const container = document.getElementById('heartsContainer');
-      container.innerHTML = '';
-      const total = 6;
-      const correct = Math.floor(Math.random() * total);
-      for (let i = 0; i < total; i++) {
-        const div = document.createElement('div');
-        div.className = 'treasure-heart';
-        div.textContent = '❤️';
-        div.onclick = () => {
-          if (i === correct) {
-            div.innerHTML = '<div class="explosion">You are the treasure of my heart, why find it? 🌹♾️💯</div>';
-            showConfetti();
-          } else {
-            div.remove();
-            alert("You're close, better luck next time!");
-          }
-        };
-        container.appendChild(div);
-      }
-    }
-    function showConfetti() {
-      const interval = setInterval(() => {
-        const emoji = document.createElement('div');
-        emoji.textContent = '😘';
-        emoji.style.position = 'fixed';
-        emoji.style.left = Math.random() * 100 + '%';
-        emoji.style.top = '0';
-        emoji.style.fontSize = '24px';
-        emoji.style.animation = 'fall 2s linear';
-        document.body.appendChild(emoji);
-        setTimeout(() => emoji.remove(), 2000);
-      }, 100);
-      setTimeout(() => clearInterval(interval), 3000);
-    }
-  </script>
-</body>
-</html>
+        document.getElementById('didYouKnow').style.display = 'flex';
+      }, 1000); 
+
+      // Show all the clouds after the intro disappears
+      const clouds = document.querySelectorAll('.message-cloud');
+      cloudsconst
