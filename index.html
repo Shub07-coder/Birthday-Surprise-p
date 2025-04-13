@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -129,18 +130,21 @@
     }
   </style>
 </head>
-<body onclick="triggerKisses()">
+<body>
   <div class="centered" id="intro">
     <h1>Happy Birthday, Piku!</h1>
+    <button onclick="startMusic(); event.stopPropagation()">Play Music</button>
     <button onclick="startSurprise(); event.stopPropagation()">Get into the specialized surprise made by Shubham for you ❤️‍🪹</button>
   </div>
+
   <div class="centered did-you-know" id="didYouKnow">
     <div class="message-cloud" onclick="revealText(this, 'It\'s YouTube without the Tube. 🫲️♾️❤️‍🪹')">Did you know who has been the most special person in my life..?</div>
     <div class="message-cloud" onclick="revealText(this, 'P – Perfect ♾️🫲️<br>I – Inspiring and Intelligent<br>K – Kind-hearted 🫨<br>U – Unique and Universe for me ♾️🥹')">Did you know the full form of Piku…?</div>
   </div>
+
   <div class="centered surprise" id="mainSurprise">
     <h2>Here’s your magical moment...</h2>
-    <audio autoplay loop>
+    <audio id="birthdayMusic" loop>
       <source src="birthday-music.mp3" type="audio/mpeg">
     </audio>
     <div class="message-heart" onclick="unfoldReveal(this, 'You are someone I need the most..♾️🥺')">Click to reveal a thought...</div>
@@ -152,6 +156,7 @@
       <p>Be exactly who you are. You’re perfect. Always have been, always will be... 🥺♾️😘</p>
     </div>
   </div>
+
   <div class="centered" id="hangingPhotos">
     <h2>Moments Captured Just for You</h2>
     <div class="photo-with-caption">
@@ -163,13 +168,16 @@
       <p class="caption">You’re not just my love; you’re my best friend and partner in all crimes...</p>
     </div>
   </div>
+
   <div class="centered" id="gameSection">
     <h2>Find the Treasure of My Heart</h2>
     <div id="heartsContainer"></div>
   </div>
+
   <div class="centered" style="margin-top: 50px;">
     <button onclick="triggerKisses(); showEndMessage()" style="background: #fff0f5; color: #d63384;">End</button>
   </div>
+
   <script>
     function revealText(el, text) {
       el.innerHTML = text;
@@ -179,12 +187,19 @@
       el.innerHTML = text;
       el.classList.add('unfold');
     }
-    function startSurprise() {
+    function startMusic() {
+      const audio = document.getElementById('birthdayMusic');
+      audio.play();
       document.getElementById('intro').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('didYouKnow').style.display = 'flex';
+      }, 1000);
+    }
+    function startSurprise() {
+      document.getElementById('didYouKnow').style.display = 'none';
       const clouds = document.querySelectorAll('.message-cloud');
       clouds.forEach(cloud => cloud.style.display = 'block');
       setTimeout(() => {
-        document.getElementById('didYouKnow').style.display = 'none';
         document.getElementById('mainSurprise').style.display = 'flex';
         document.getElementById('hangingPhotos').style.display = 'flex';
         const hearts = document.querySelectorAll('.message-heart');
@@ -215,11 +230,14 @@
         container.appendChild(div);
       }
     }
+    function showConfetti() {
+      // Add confetti effect here if needed
+    }
     function showEndMessage() {
       alert("This relationship will never come to an end. Love uhh ♾️😘");
     }
     function triggerKisses() {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 40; i++) {
         const kiss = document.createElement('div');
         kiss.className = 'kiss';
         kiss.style.left = Math.random() * 100 + 'vw';
